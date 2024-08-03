@@ -54,7 +54,7 @@ Generative Adversarial Network (GAN) for generating images of art.
     │   ├── predict.py          <- Code to run model inference with trained models          
     │   └── train.py            <- Code to train models
     │
-    └── plots.py                <- Code to create visualizations
+    └── visualize.py                <- Code to create visualizations
 ```
 
 --------
