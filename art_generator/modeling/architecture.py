@@ -10,67 +10,84 @@ def weights_init(m):
         nn.init.normal_(m.weight.data, 1.0, 0.02)
         nn.init.constant_(m.bias.data, 0)
 
-class Discriminator(nn.Module):
-    def __init__(self, channels_img, features_d):
-        super(Discriminator, self).__init__()
-        self.disc = nn.Sequential(
-            # input: N x channels_img x 64 x 64
-            nn.Conv2d(channels_img, features_d, kernel_size=4, stride=2, padding=1),
-            nn.LeakyReLU(0.2),
-            self._block(features_d, features_d * 2, 4, 2, 1),
-            self._block(features_d * 2, features_d * 4, 4, 2, 1),
-            self._block(features_d * 4, features_d * 8, 4, 2, 1),
-            # After all _block img output is 4x4 (Conv2d below makes it 1x1)
-            nn.Conv2d(features_d * 8, 1, kernel_size=4, stride=2, padding=0),
-            nn.Sigmoid(),
-        )
+# Number of channels in the training images. For color images this is 3
+nc = 3
 
-    def _block(self, in_channels, out_channels, kernel_size, stride, padding):
-        return nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                out_channels,
-                kernel_size,
-                stride,
-                padding,
-                bias=False,
-            ),
-            nn.BatchNorm2d(out_channels),
-            nn.LeakyReLU(0.2),
-        )
+# Size of z latent vector (i.e. size of generator input)
+nz = 100
 
-    def forward(self, x):
-        return self.disc(x)
+# Size of feature maps in generator
+ngf = 64
+
+# Size of feature maps in discriminator
+ndf = 64
+
+# Number of training epochs
+num_epochs = 5
+
+# Learning rate for optimizers
+lr = 0.0002
+
+# Beta1 hyperparameter for Adam optimizers
+beta1 = 0.5
+
+# Number of GPUs available. Use 0 for CPU mode.
+ngpu = 1
 
 class Generator(nn.Module):
-    def __init__(self, z_dim, channels_img, features_g):
+    def __init__(self, ngpu):
         super(Generator, self).__init__()
-        self.gen = nn.Sequential(
-            # Input: N x z_dim x 1 x 1
-            self._block(z_dim, features_g * 16, 4, 1, 0),  # img: 4x4
-            self._block(features_g * 16, features_g * 8, 4, 2, 1),  # img: 8x8
-            self._block(features_g * 8, features_g * 4, 4, 2, 1),  # img: 16x16
-            self._block(features_g * 4, features_g * 2, 4, 2, 1),  # img: 32x32
-            nn.ConvTranspose2d(
-                features_g * 2, channels_img, kernel_size=4, stride=2, padding=1
-            ),
-            # Output: N x channels_img x 64 x 64
-            nn.Tanh(),
+        self.ngpu = ngpu
+        self.main = nn.Sequential(
+            # input is Z, going into a convolution
+            nn.ConvTranspose2d( nz, ngf * 8, 4, 1, 0, bias=False),
+            nn.BatchNorm2d(ngf * 8),
+            nn.ReLU(True),
+            # state size. ``(ngf*8) x 4 x 4``
+            nn.ConvTranspose2d(ngf * 8, ngf * 4, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ngf * 4),
+            nn.ReLU(True),
+            # state size. ``(ngf*4) x 8 x 8``
+            nn.ConvTranspose2d( ngf * 4, ngf * 2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ngf * 2),
+            nn.ReLU(True),
+            # state size. ``(ngf*2) x 16 x 16``
+            nn.ConvTranspose2d( ngf * 2, ngf, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ngf),
+            nn.ReLU(True),
+            # state size. ``(ngf) x 32 x 32``
+            nn.ConvTranspose2d( ngf, nc, 4, 2, 1, bias=False),
+            nn.Tanh()
+            # state size. ``(nc) x 64 x 64``
         )
 
-    def _block(self, in_channels, out_channels, kernel_size, stride, padding):
-        return nn.Sequential(
-            nn.ConvTranspose2d(
-                in_channels,
-                out_channels,
-                kernel_size,
-                stride,
-                padding,
-                bias=False,
-            ),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(),
+    def forward(self, input):
+        return self.main(input)
+
+class Discriminator(nn.Module):
+    def __init__(self, ngpu):
+        super(Discriminator, self).__init__()
+        self.ngpu = ngpu
+        self.main = nn.Sequential(
+            # input is ``(nc) x 64 x 64``
+            nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. ``(ndf) x 32 x 32``
+            nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 2),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. ``(ndf*2) x 16 x 16``
+            nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 4),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. ``(ndf*4) x 8 x 8``
+            nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(ndf * 8),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. ``(ndf*8) x 4 x 4``
+            nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False),
+            nn.Sigmoid()
         )
 
-    def forward(self, x):
-        return self.gen(x)
+    def forward(self, input):
+        return self.main(input)
