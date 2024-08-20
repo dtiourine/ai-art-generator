@@ -11,7 +11,7 @@ def get_generator():
     print("Generator loaded successfully!")
     return generator
 
-@app.get("/")
+@app.get("/generate")
 async def root():
     generator = get_generator()
     noise_vector = generate_noise_vector()
