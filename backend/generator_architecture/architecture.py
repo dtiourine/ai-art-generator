@@ -1,5 +1,5 @@
 import torch.nn as nn
-import config
+import generator_architecture.config as config
 
 nz = config.NZ
 ngf = config.NGF
