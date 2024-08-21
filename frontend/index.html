@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen justify-between bg-gray-100">
+    <h1 class="text-3xl font-bold underline text-center border-2 border-red-500">Hello World</h1>
+    <div class="gap-8 p-6 rounded-lg shadow-md flex flex-col items-center justify-center border-red-500 border-2">
+        <h1 class="text-2xl font-bold mb-4">GAN Generated Image</h1>
+        <div class="flex gap-8">
+            <div class="w-full flex flex-col gap-4">
+                <img id="ganImage" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+                <img id="ganImage2" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+            </div>
+            <div class="w-full flex flex-col gap-4">
+                <img id="ganImage3" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+                <img id="ganImage4" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+            </div>
+            <div class="w-full flex flex-col gap-4">
+                <img id="ganImage5" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+                <img id="ganImage6" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+            </div>
+            <div class="w-full flex flex-col gap-4">
+                <img id="ganImage7" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+                <img id="ganImage8" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+            </div>
+            <div class="w-full flex flex-col gap-4">
+                <img id="ganImage9" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+                <img id="ganImage10" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+            </div>
+        </div>
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded" type="button">Refresh</button>
+
+        <p class="mt-4 text-sm text-gray-600">Note each image is 256 x 256 pixels</p>
+    </div>
+</body>
+</html>
