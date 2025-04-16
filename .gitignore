@@ -176,3 +176,4 @@ cython_debug/
 /models/generator.pth
 /data/processed
 /data/raw
+/notebooks/generator.pth
