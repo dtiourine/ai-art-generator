@@ -22,7 +22,7 @@ generator = None
 @app.on_event("startup")
 async def startup_event():
     """Initialize the generator when the application starts"""
-    app_state.generator = load_generator('generator.pth', Generator)
+    app_state.generator = load_generator('../models/generator.pth', Generator)
     app_state.generator.eval()
     print("Generator loaded successfully!")
 
