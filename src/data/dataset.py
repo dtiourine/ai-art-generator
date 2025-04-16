@@ -40,7 +40,7 @@ def download_dataset(competition_name="gan-getting-started", path=RAW_DATA_DIR):
     logger.info(f"Removed zip file: {zip_file}")
 
 
-def move_images(source_dir=RAW_DATA_DIR / 'monet_jpg', destination_dir=PROCESSED_DATA_DIR):
+def move_images(source_dir=RAW_DATA_DIR / 'monet_jpg', destination_dir=PROCESSED_DATA_DIR / 'real_art_images'):
     """
     Organizes the dataset by moving images from raw/monet_jpg to processed/
     """
