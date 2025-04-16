@@ -1,49 +1,296 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Art Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
 </head>
-<body class="flex flex-col min-h-screen justify-between bg-gray-100">
-    <h1 class="text-3xl font-bold underline text-center border-2 border-red-500">Hello World</h1>
-    <div class="gap-8 p-6 rounded-lg shadow-md flex flex-col items-center justify-center border-red-500 border-2">
-        <h1 class="text-2xl font-bold mb-4">GAN Generated Image</h1>
-        <div class="flex gap-8">
-            <div class="w-full flex flex-col gap-4">
-                <img id="ganImage" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-                <img id="ganImage2" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-            </div>
-            <div class="w-full flex flex-col gap-4">
-                <img id="ganImage3" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-                <img id="ganImage4" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-            </div>
-            <div class="w-full flex flex-col gap-4">
-                <img id="ganImage5" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-                <img id="ganImage6" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-            </div>
-            <div class="w-full flex flex-col gap-4">
-                <img id="ganImage7" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-                <img id="ganImage8" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-            </div>
-            <div class="w-full flex flex-col gap-4">
-                <img id="ganImage9" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
-                <img id="ganImage10" src="placeholder.jpg" alt="GAN generated image" class="max-w-full max-h-full object-contain image-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Download</button>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <h1 class="ml-2 text-2xl font-bold text-gray-900">AI Art Generator</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="#" class="text-gray-500 hover:text-gray-900">Gallery</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-gray-900">About</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded" type="button">Refresh</button>
+    </header>
 
-        <p class="mt-4 text-sm text-gray-600">Note each image is 256 x 256 pixels</p>
-    </div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Create Unique AI Art</h2>
+                <p class="mt-4 text-lg text-gray-500">Generate one-of-a-kind artwork with our GAN-powered AI. No prompts needed!</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-3xl mx-auto">
+                <div class="p-6">
+                    <div id="generation-area" class="flex flex-col items-center">
+                        <div id="image-container" class="w-full h-64 sm:h-96 bg-gray-100 rounded-lg flex items-center justify-center mb-6">
+                            <p id="placeholder-text" class="text-gray-400 text-lg">Your generated art will appear here</p>
+                            <img id="generated-image" class="w-full h-full object-contain hidden" src="/placeholder.svg" alt="Generated artwork">
+                            <div id="loading-indicator" class="hidden">
+                                <div class="animate-pulse flex space-x-4">
+                                    <div class="rounded-full bg-gray-300 h-12 w-12"></div>
+                                    <div class="flex-1 space-y-4 py-1">
+                                        <div class="h-4 bg-gray-300 rounded w-3/4"></div>
+                                        <div class="space-y-2">
+                                            <div class="h-4 bg-gray-300 rounded"></div>
+                                            <div class="h-4 bg-gray-300 rounded w-5/6"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button id="generate-btn" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                Generate Art
+                            </button>
+                            <button id="download-btn" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50" disabled>
+                                <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Recent Creations</h2>
+                <p class="mt-4 text-lg text-gray-500">Browse through recently generated artwork</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
+                <!-- Gallery items will be added here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-12">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500">&copy; 2025 AI Art Generator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generate-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const imageContainer = document.getElementById('image-container');
+            const placeholderText = document.getElementById('placeholder-text');
+            const generatedImage = document.getElementById('generated-image');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const gallery = document.getElementById('gallery');
+
+            // Store the current base64 image data
+            let currentImageData = null;
+
+            // Array to store generated images (in a real app, these would be stored in a database)
+            let generatedImages = [];
+
+            async function generateArtFromAPI() {
+                // Make the actual API call to your GAN backend
+                const response = await fetch('http://127.0.0.1:8000/generate-art', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+
+                // Assuming your API returns { image: "base64string" }
+                // Make sure to add the data URI prefix if your API doesn't include it
+                return data.image.startsWith('data:')
+                    ? data.image
+                    : `data:image/png;base64,${data.image}`;
+            }
+
+            // Initialize gallery with some sample base64 images
+            function initializeGallery() {
+                // Clear gallery first
+                gallery.innerHTML = '';
+
+                // Create 6 sample images
+                for (let i = 0; i < 6; i++) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 300;
+                    canvas.height = 300;
+                    const ctx = canvas.getContext('2d');
+
+                    // Create a simple colored background
+                    const hue = i * 60; // Different hue for each sample
+                    ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Add some shapes
+                    for (let j = 0; j < 20; j++) {
+                        ctx.beginPath();
+                        ctx.arc(
+                            Math.random() * canvas.width,
+                            Math.random() * canvas.height,
+                            Math.random() * 30,
+                            0,
+                            Math.PI * 2
+                        );
+                        ctx.fillStyle = `hsla(${hue + Math.random() * 60}, 100%, 50%, ${Math.random() * 0.8})`;
+                        ctx.fill();
+                    }
+
+                    // Convert to base64 and add to gallery
+                    const base64Data = canvas.toDataURL('image/png');
+                    generatedImages.push({
+                        data: base64Data,
+                        date: new Date().toLocaleDateString()
+                    });
+
+                    addImageToGallery(base64Data, new Date().toLocaleDateString());
+                }
+            }
+
+            // Add image to gallery
+            function addImageToGallery(base64Data, date) {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'bg-white rounded-lg shadow overflow-hidden';
+
+                const img = document.createElement('img');
+                img.src = base64Data;
+                img.className = 'w-full h-48 object-cover';
+                img.alt = 'AI generated artwork';
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'p-4';
+
+                const dateElement = document.createElement('p');
+                dateElement.className = 'text-sm text-gray-500';
+                dateElement.textContent = date;
+
+                const downloadButton = document.createElement('button');
+                downloadButton.className = 'mt-2 text-sm text-indigo-600 hover:text-indigo-800';
+                downloadButton.textContent = 'Download';
+                downloadButton.addEventListener('click', function() {
+                    downloadImage(base64Data, 'ai-artwork.png');
+                });
+
+                infoDiv.appendChild(dateElement);
+                infoDiv.appendChild(downloadButton);
+                galleryItem.appendChild(img);
+                galleryItem.appendChild(infoDiv);
+
+                // Add to the beginning of the gallery
+                gallery.insertBefore(galleryItem, gallery.firstChild);
+
+                // Remove the last item if there are more than 6
+                if (gallery.children.length > 6) {
+                    gallery.removeChild(gallery.lastChild);
+                }
+            }
+
+            // Download image function
+            function downloadImage(base64Data, fileName) {
+                const link = document.createElement('a');
+                link.href = base64Data;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // Generate art function
+            generateBtn.addEventListener('click', async function() {
+                // Show loading state
+                placeholderText.classList.add('hidden');
+                generatedImage.classList.add('hidden');
+                loadingIndicator.classList.remove('hidden');
+                downloadBtn.disabled = true;
+
+                try {
+                    // Call the API to get base64 image data
+                    const base64Data = await generateArtFromAPI();
+
+                    // Store the current image data
+                    currentImageData = base64Data;
+
+                    // Hide loading state
+                    loadingIndicator.classList.add('hidden');
+
+                    // Set the image source to the base64 data
+                    generatedImage.src = base64Data;
+                    generatedImage.classList.remove('hidden');
+
+                    // Enable download button
+                    downloadBtn.disabled = false;
+
+                    // Add to gallery and store in our array
+                    const date = new Date().toLocaleDateString();
+                    generatedImages.unshift({
+                        data: base64Data,
+                        date: date
+                    });
+
+                    // Keep only the latest 50 images in memory
+                    if (generatedImages.length > 50) {
+                        generatedImages.pop();
+                    }
+
+                    // Update the gallery UI
+                    addImageToGallery(base64Data, date);
+
+                } catch (error) {
+                    console.error('Error generating art:', error);
+                    // Show error message
+                    loadingIndicator.classList.add('hidden');
+                    placeholderText.textContent = 'Error generating art. Please try again.';
+                    placeholderText.classList.remove('hidden');
+                }
+            });
+
+            // Download button event listener
+            downloadBtn.addEventListener('click', function() {
+                if (currentImageData) {
+                    downloadImage(currentImageData, 'ai-generated-art.png');
+                }
+            });
+
+            // Initialize the gallery with sample images
+            initializeGallery();
+        });
+    </script>
 </body>
 </html>

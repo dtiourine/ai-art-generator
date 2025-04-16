@@ -16,7 +16,7 @@ def load_generator(path, generator_class):
     return generator
 
 
-def generate_noise_vector(batch_size=10, dim=100):
+def generate_noise_vector(batch_size=1, dim=100):
     """
     Generates a random noise vector of dimension dim
     :param dim: The dimension of the noise vector
