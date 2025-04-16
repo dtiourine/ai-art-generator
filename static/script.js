@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let generatedImages = [];
 
     async function generateArtFromAPI() {
-        // Make the actual API call to your GAN backend
         const response = await fetch('http://127.0.0.1:8000/generate-art', {
             method: 'POST',
             headers: {

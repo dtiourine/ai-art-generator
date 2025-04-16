@@ -1,6 +1,7 @@
 import torch
 from PIL import Image
 import io
+from generator_architecture.architecture import Generator
 
 
 def load_generator(path, generator_class):
@@ -53,6 +54,7 @@ def generate_image_tensor_from_noise_vector(noise_vector, generator):
 #     webp_buffer.seek(0)
 #
 #     return webp_buffer.getvalue()
+
 
 def batch_tensor_to_webp(tensor_batch):
     # Ensure the tensor is on CPU and detached from the computation graph
