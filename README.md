@@ -6,6 +6,28 @@
 
 Generative Adversarial Network (GAN) for generating images of art.
 
+## Reference
+
+For running fastapi server locally:
+
+in `root`:
+
+```
+$env:PYTHONPATH="."
+fastapi dev app/main.py
+```
+
+The first line is needed to avoid import errors.
+
+For running html on localhost:
+
+in `/static`:
+```
+python -m http.server 3000
+```
+
+This is necessary so frontend can communicate with backend. 
+
 ## Project Organization
 
 ```
