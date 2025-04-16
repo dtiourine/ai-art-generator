@@ -1,2 +1,4 @@
 .idea
 /models/generator.pth
+/data/processed
+/data/raw

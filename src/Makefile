@@ -2,7 +2,7 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = art-generator
+PROJECT_NAME = src
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
@@ -11,7 +11,7 @@ PYTHON_INTERPRETER = python
 #################################################################################
 
 
-## Install Python Dependencies
+## Install Python dependencies
 .PHONY: requirements
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
@@ -26,29 +26,23 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8 and black (use `make format` to do formatting)
+
+## Lint using flake8, black, and isort (use `make format` to do formatting)
 .PHONY: lint
 lint:
-	flake8 art_generator
-	isort --check --diff --profile black art_generator
-	black --check --config pyproject.toml art_generator
+	flake8 src
+	isort --check --diff src
+	black --check src
 
 ## Format source code with black
 .PHONY: format
 format:
-	black --config pyproject.toml art_generator
+	isort src
+	black src
 
 
 
 
-## Set up python interpreter environment
-.PHONY: create_environment
-create_environment:
-	
-	conda create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) -y
-	
-	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-	
 
 
 
@@ -57,10 +51,10 @@ create_environment:
 #################################################################################
 
 
-## Make Dataset
+## Make dataset
 .PHONY: data
 data: requirements
-	$(PYTHON_INTERPRETER) art_generator/dataset.py
+	$(PYTHON_INTERPRETER) src/dataset.py
 
 
 #################################################################################
