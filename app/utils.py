@@ -1,7 +1,8 @@
 import torch
 from PIL import Image
 import io
-from generator_architecture.architecture import Generator
+
+from src.config import ngpu
 
 
 def load_generator(path, generator_class):
@@ -11,9 +12,8 @@ def load_generator(path, generator_class):
     :param generator_class: Class inheriting from torch.nn.Module containing the architecture of the generator
     :return: Generator object from the generator class loaded with the given state dict
     """
-    checkpoint = torch.load(path)
-    generator = generator_class()  # You need to define the generator architecture
-    generator.load_state_dict(checkpoint['model_state_dict'])
+    generator = generator_class(ngpu=ngpu)  # You need to define the generator architecture
+    generator.load_state_dict(torch.load(path))
     return generator
 
 

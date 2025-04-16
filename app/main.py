@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from generator_architecture.architecture import Generator
+from src.config import MODELS_DIR
+from src.models.generator import Generator
 from utils import load_generator
 import app_state
 from routes import router
@@ -22,7 +22,7 @@ generator = None
 @app.on_event("startup")
 async def startup_event():
     """Initialize the generator when the application starts"""
-    app_state.generator = load_generator('../models/generator.pth', Generator)
+    app_state.generator = load_generator(MODELS_DIR / 'generator.pth', Generator)
     app_state.generator.eval()
     print("Generator loaded successfully!")
 
