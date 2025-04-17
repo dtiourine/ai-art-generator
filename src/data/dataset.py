@@ -54,14 +54,3 @@ def move_images(source_dir=RAW_DATA_DIR / 'monet_jpg', destination_dir=PROCESSED
         shutil.copy2(source_file, destination_file)
 
 
-@app.command()
-def main():
-    logger.info(f"Downloading the dataset to {RAW_DATA_DIR}")
-    download_dataset()
-
-    logger.info(f"Moving art image data to {PROCESSED_DATA_DIR}")
-    move_images()
-
-
-if __name__ == "__main__":
-    app()

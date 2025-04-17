@@ -13,6 +13,7 @@ Generative Adversarial Network (GAN) for generating images of art.
 - Add script/instructions for downloading model/data
 - Add requirements.txt file
 - Finish up READme (both this one and the one remember the one in /src)
+- To dependencies mention that a kaggle key is required to download dataset. Alternatively can download dataset at the website. Maybe put some sort of warning in setup_assets.py that there was an issue with downloading data from Kaggle (if there is one), and only model was installed
 
 ## 📦 Getting Started 
 
