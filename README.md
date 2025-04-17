@@ -28,7 +28,9 @@ pip install -r requirements.txt
 python setup_assets.py
 ```
 
-This will: - Download the pretrained GAN model into the `models/` folder - Download and extract the training dataset into `data/`
+This will: 
+- Download the pretrained GAN model into the `models/` folder
+- Download and extract the training dataset into `data/`
 
 ## 🚀 Running Locally
 
