@@ -10,12 +10,31 @@ Generative Adversarial Network (GAN) for generating images of art.
 
 # Next steps:
 - **Retrain and adjust model to this time use an input image shape of 224 instead of 64 (so change image size hyperparameter)**
+- Add script/instructions for downloading model/data
+- Add requirements.txt file
+- Finish up READme (both this one and the one remember the one in /src)
+
+## 📦 Getting Started 
+
+### 1. Install dependencies 
+
+```bash 
+pip install -r requirements.txt
+```
+
+### 2. Download assets (pretrained model + dataset) 
+
+```bash 
+python setup_assets.py
+```
+
+This will: - Download the pretrained GAN model into the `models/` folder - Download and extract the training dataset into `data/`
 
 ## 🚀 Running Locally
 
 ### 🔄 Quick Start (Recommended)
 
-To launch both the **FastAPI backend** and the **HTML frontend** locally with one command:
+To launch both the **FastAPI backend** and the **HTML frontend** locally with one command to interact with the art generator:
 
 ```
 python run_dev.py
