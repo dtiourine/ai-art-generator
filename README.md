@@ -39,6 +39,65 @@ python -m http.server 3000
 
 This is necessary so frontend can communicate with backend. 
 
+## 🚀 Running Locally
+
+### 🔄 Quick Start (Recommended)
+
+To launch both the **FastAPI backend** and the **HTML frontend** locally with one command:
+
+```
+python run_dev.py
+```
+
+This will:
+- Set the correct `PYTHONPATH` for clean imports
+- Start the FastAPI server at [http://localhost:8000](http://localhost:8000)
+- Serve the frontend at [http://localhost:3000](http://localhost:3000)
+
+Make sure you are in the **project root** directory when you run the command.
+
+---
+
+### 🛠 Manual Setup (Alternative)
+
+If you prefer to run everything manually, follow the steps below:
+
+#### 1. Start FastAPI Backend
+
+Run this from the **project root directory**:
+
+**On macOS/Linux:**
+
+```bash
+PYTHONPATH=. fastapi dev app/main.py
+```
+
+**On Windows (PowerShell):**
+
+```bash
+$env:PYTHONPATH="." 
+fastapi dev app/main.py
+```
+
+This starts the backend at:  
+[http://localhost:8000](http://localhost:8000)
+
+---
+
+#### 2. Start Frontend (Static HTML)
+
+In a new terminal, navigate to the `static/` folder and run:
+
+```bash
+cd static 
+python -m http.server 3000
+```
+
+This starts the frontend at:  
+[http://localhost:3000](http://localhost:3000)
+
+The frontend can now communicate with the FastAPI backend to generate images.
+
 ## Project Organization
 
 ```
