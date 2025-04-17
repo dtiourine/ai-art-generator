@@ -9,7 +9,7 @@ Generative Adversarial Network (GAN) for generating images of art.
 ## Reference for self
 
 # Next steps:
-- Fix issue where image seems to get distorted on frontend
+- **Retrain and adjust model to this time use an input image shape of 224 instead of 64 (so change image size hyperparameter)**
 - Add training and predicting logic from notebook to src/train/train.py and src/train/predict.py
 - Add main script to streamline launching application locally (both fastapi backend and html frontend)
 
