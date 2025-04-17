@@ -10,34 +10,6 @@ Generative Adversarial Network (GAN) for generating images of art.
 
 # Next steps:
 - **Retrain and adjust model to this time use an input image shape of 224 instead of 64 (so change image size hyperparameter)**
-- Add training and predicting logic from notebook to src/train/train.py and src/train/predict.py
-- Add main script to streamline launching application locally (both fastapi backend and html frontend)
-
-For running fastapi server locally:
-
-in `root`:
-
-For Windows:
-```
-$env:PYTHONPATH="."
-fastapi dev app/main.py
-```
-
-For Mac/Linux:
-```
-PYTHONPATH=. fastapi dev app/main.py
-```
-
-The first line is needed to avoid import errors.
-
-For running html on localhost:
-
-in `/static`:
-```
-python -m http.server 3000
-```
-
-This is necessary so frontend can communicate with backend. 
 
 ## 🚀 Running Locally
 
