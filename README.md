@@ -17,9 +17,15 @@ For running fastapi server locally:
 
 in `root`:
 
+For Windows:
 ```
 $env:PYTHONPATH="."
 fastapi dev app/main.py
+```
+
+For Mac/Linux:
+```
+PYTHONPATH=. fastapi dev app/main.py
 ```
 
 The first line is needed to avoid import errors.
