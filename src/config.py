@@ -31,7 +31,7 @@ MODELS_DIR = PROJ_ROOT / "models"
 """Training Hyperparameters"""
 
 batch_size = 128
-image_size = 64
+image_size = 256
 nc = 3  # Number of channels
 nz = 100  # Size of z latent vector
 ngf = 64  # Size of feature maps in generator
